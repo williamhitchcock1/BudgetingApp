@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.DBConnection;
+
 /**
  * Servlet implementation class LoginCheck
  */
@@ -38,7 +40,11 @@ public class LoginCheck extends HttpServlet {
 		String username = request.getParameter("uname");
 		String password = request.getParameter("password");
 		
-		if(username.equals("admin") && password.equals("admin")) {
+		String foundUsername = DBConnection.findUser(username);
+		String foundPassword = DBConnection.findPassword(password);
+		
+		
+		if(username.equals(foundUsername) && password.equals(foundPassword)) {
 			response.sendRedirect("home.jsp");
 		}
 		else {
